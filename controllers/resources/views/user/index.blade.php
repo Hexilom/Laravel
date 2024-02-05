@@ -9,9 +9,11 @@
 <body>
     <h1>User List</h1>
     <ul>
-        @foreach($users as $user)
-        <li>{{ $user->name }}</li>
-        @endforeach
+        @forelse($users as $user)
+            <li>{{ $user->name }}</li>
+        @empty
+            <li>List Empty</li>
+        @endforelse
     </ul>
 </body>
 </html>
