@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Phone;
+use App\Models\Role;
 
 class User extends Authenticatable
 {
@@ -42,4 +45,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function phones():HasMany
+    {
+        return $this->hasMany(Phone::class);
+    }
+
+    public function roles(){
+        return $this->belongsToMany(Role::class)->withPivot('added_by');
+    }
 }
