@@ -10,6 +10,10 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Phone;
 use App\Models\Role;
+use App\Models\Sim;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+
 
 class User extends Authenticatable
 {
@@ -53,5 +57,15 @@ class User extends Authenticatable
 
     public function roles(){
         return $this->belongsToMany(Role::class)->withPivot('added_by');
+    }
+
+    public function phoneSims():HasManyThrough
+    {
+        return $this->hasManyThrough(Sim::class , Phone::class);
+    }
+    
+    public function image():MorphMany
+    {
+        return $this->morphMany(Image::class, 'imageable');
     }
 }
